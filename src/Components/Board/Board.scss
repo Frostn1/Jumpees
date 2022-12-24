@@ -26,25 +26,27 @@
         cursor: pointer;
       }
       .light-piece-color{
-        background: #fff;
+        background: var(--light-piece-color);
       }
       .dark-piece-color{
-        background: saddlebrown;
+        background: var(--dark-piece-color);
       }
     }
     .clicked-color{
-      background: #2CDA9D !important;
+      background: var(--clicked-bg-color) !important;
+      box-shadow: 3px 3px 17px 1px var(--clicked-box-color) inset;
     }
     .path-color{
-      background: #397aaf !important;
+      background: var(--path-bg-color) !important;
       cursor: pointer;
+      box-shadow: 3px 3px 17px 1px var(--path-box-color) inset;
     }
     .black{
-      background: #282c34;
+      background: var(--dark-background-color);
     }
 
     .white{
-      background: antiquewhite;
+      background: var(--light-background-color);
     }
 
   }
