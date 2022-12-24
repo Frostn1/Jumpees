@@ -1,0 +1,12 @@
+#main-page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  .toggle-switch-container{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+}

@@ -1,8 +1,6 @@
 import './Board.scss'
-import {ReactComponent as DarkPiece} from "../../Assets/dark-piece.svg";
-import {ReactComponent as LightPiece} from "../../Assets/light-piece.svg";
 import {useEffect, useState} from "react";
-import {click} from "@testing-library/user-event/dist/click";
+import PropTypes from "prop-types";
 
 const BOARD_SIZE = 8;
 const plain_board = [
@@ -204,7 +202,7 @@ const colorPallete = [
         },
     }
 ]
-const Board = () => {
+const Board = (props) => {
 
     const [selectedRowIndex, setSelectedRowIndex] = useState(-1);
     const [selectedColumnIndex, setSelectedColumnIndex] = useState(-1);
@@ -318,7 +316,6 @@ const Board = () => {
             return;
         }
 
-
         setSelectedRowIndex(rowIndex);
         setSelectedColumnIndex(columnIndex);
         plain_board[rowIndex][columnIndex].clicked = true;
@@ -326,14 +323,16 @@ const Board = () => {
             const parsedValidMove = JSON.parse(_oldValidMove)
             plain_board[parsedValidMove[0]][parsedValidMove[1]].path = false;
         })
+
         const validMoves = getSlidePaths(rowIndex, columnIndex, plain_board[rowIndex][columnIndex].piece)
         validMoves.forEach((value, _validMove) => {
             const parsedValidMove = JSON.parse(_validMove)
 
             plain_board[parsedValidMove[0]][parsedValidMove[1]].path = true;
         })
-        setLiveBoard(plain_board)
         setSelectedValidMoves(validMoves);
+
+        setLiveBoard(plain_board)
     }
 
     const checkWin = () => {
@@ -422,17 +421,23 @@ const Board = () => {
         )
     }
     useEffect(setUpBoard, [])
-    return (<div id={'board-pane'}>
+
+    return (
+        <div id={'board-pane'}>
         {liveBoard.map((row, rowIndex) => {
-            return (<div className={'row'}>
+            return (
+                <div className={'row'}>
                 {row.map((square, columnIndex) => {
-                    return (<>
+                    return (
+                    <>
                         <div
                             className={`square ${rowIndex % 2 === 0 && columnIndex % 2 === 0 || rowIndex % 2 !== 0 && columnIndex % 2 !== 0 ? 'white' : 'black'}  ${square.clicked ? 'clicked-color' : ''} 
-                                ${square.path ? 'path-color' : ''}`} onClick={square.path ? () => {movePiece(rowIndex, columnIndex, selectedRowIndex, selectedColumnIndex, plain_board[selectedRowIndex][selectedColumnIndex].piece)} : () => {}}>
-                            {square.piece !== null ? <div
+                                ${square.path && props.showPaths ? 'path-color' : ''}`} onClick={square.path ? () => {movePiece(rowIndex, columnIndex, selectedRowIndex, selectedColumnIndex, liveBoard[selectedRowIndex][selectedColumnIndex].piece)} : () => {}}>
+                            {square.piece !== null ?
+                                <div
                                 className={`piece ${square.piece === 1 ? 'light-piece-color' : 'dark-piece-color'} 
-                               `} onClick={() => {onClick(rowIndex, columnIndex)}}/> : null}
+                               `} onClick={() => {onClick(rowIndex, columnIndex)}}/>
+                                : null}
                         </div>
                     </>)
                 })}
@@ -445,7 +450,10 @@ const Board = () => {
             </div> :
             null
         }
+
     </div>)
 };
-
+Board.propTypes = {
+    showPaths: PropTypes.bool.isRequired
+}
 export default Board
