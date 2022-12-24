@@ -1,0 +1,51 @@
+#board-pane{
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  .row{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    .square{
+      height: 80px;
+      width: 80px;
+      position: relative;
+      .piece{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        z-index: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 3px 3px 10px 1px rgba(56,56,56,0.91);
+        cursor: pointer;
+      }
+      .light-piece-color{
+        background: #fff;
+      }
+      .dark-piece-color{
+        background: saddlebrown;
+      }
+    }
+    .clicked-color{
+      background: #2CDA9D !important;
+    }
+    .path-color{
+      background: #397aaf !important;
+      cursor: pointer;
+    }
+    .black{
+      background: #282c34;
+    }
+
+    .white{
+      background: antiquewhite;
+    }
+
+  }
+}
