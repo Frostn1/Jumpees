@@ -213,6 +213,8 @@ const Board = () => {
     const [currentPlayer, setCurrentPlayer] = useState(1);
     const [moveCounter, setMoveCounter] = useState(0);
     const [selectedColorPallete, setSelectedColorPallete] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
+    const [playerWon, setPlayerWon] = useState(null);
     const getJumpPaths = (rowIndex, columnIndex, pieceColor, oldValidMoves) => {
         // [[x,y]...] which are valid moves
         const validMoves = new Map();
@@ -303,7 +305,6 @@ const Board = () => {
         tempValidMoves.forEach((value, _oldValidMove) => {
             validMoves.set(_oldValidMove, value)
         })
-        console.log('sean .. valid moves', validMoves)
         return validMoves
     }
     const onClick = (rowIndex, columnIndex) => {
@@ -335,6 +336,31 @@ const Board = () => {
         setSelectedValidMoves(validMoves);
     }
 
+    const checkWin = () => {
+        let lightColorCheck = true;
+        for (let i = 0;i < 3; i++)
+            for(let j = 0; j < 3; j++) {
+                lightColorCheck = liveBoard[i][j].piece === 1 ? true : false;
+                if(!lightColorCheck)
+                    i = j = 3;
+            }
+        if(lightColorCheck) {
+            setGameOver(true);
+            setPlayerWon(1)
+        }
+        let darkColorCheck = true;
+        for (let i = 5;i < BOARD_SIZE; i++)
+            for(let j = 5; j < BOARD_SIZE; j++) {
+                darkColorCheck = liveBoard[i][j].piece === 0 ? true : false;
+                if(!darkColorCheck)
+                    i = j = BOARD_SIZE;
+            }
+        if(darkColorCheck) {
+            setGameOver(true);
+            setPlayerWon(0)
+        }
+    }
+
     const movePiece = (destRowIndex, destColumnIndex, srcRowIndex, srcColumnIndex, piece) => {
         if(liveBoard[destRowIndex][destColumnIndex].path) {
             plain_board[srcRowIndex][srcColumnIndex].piece = null;
@@ -343,6 +369,8 @@ const Board = () => {
         setLiveBoard(plain_board)
         setCurrentPlayer(currentPlayer ? 0 : 1)
         setMoveCounter(moveCounter + 1)
+        if(moveCounter > 15)
+            checkWin()
         clearSelection();
     }
 
@@ -410,6 +438,13 @@ const Board = () => {
                 })}
             </div>)
         })}
+        {gameOver ?
+            <div className={'display-game-over'}>
+                Game over<br/>
+                {playerWon ? 'Light' : 'Dark'} Player won !
+            </div> :
+            null
+        }
     </div>)
 };
 
