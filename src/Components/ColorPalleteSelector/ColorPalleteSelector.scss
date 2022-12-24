@@ -1,18 +1,13 @@
 #color-pallete-pane {
   display: inline-flex;
-  //max-width: 100%;
-  //width: auto;
   margin-right: 15px;
   justify-content: space-around;
-  //align-items: center;
   .color-pallete{
     display: inline-flex;
-    //width: 135px;
     width: 105px;
     position: relative;
     cursor: pointer;
     margin-right: 30px;
-    //align-items: center;
     .square{
       width: 30px;
       height: 30px;
@@ -24,9 +19,6 @@
   }
   .selected-color-pallete{
     background: transparent !important;
-    //width: auto;
-    //border: rgba(40, 44, 52, 0.2) solid 0.5px;
-    //box-shadow: #282c34 5px 5px 24px 2px;
     border-radius: 5px;
     height: 30px;
   }
