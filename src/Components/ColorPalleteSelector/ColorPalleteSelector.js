@@ -3,6 +3,7 @@ import './ColorPalleteSelector.scss';
 
 const ColorPalleteSelector = (props) => {
 
+    const handleSelection = (selectedIndex) => {
         console.log('sean .. selected index', selectedIndex)
         props.handleSelectColorPallete(selectedIndex)
     }
