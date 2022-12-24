@@ -176,10 +176,24 @@ const colorPallete = [
         },
     },
     {
-        boardLightColor:'antiquewhite',
-        boardDarkColor:'#282c34',
-        darkPieceColor: 'saddlebrown',
-        lightPieceColor: '#fff',
+        boardLightColor:'#F6E8EA',
+        boardDarkColor:'#22181C',
+        darkPieceColor: '#312F2F',
+        lightPieceColor: '#6B818C',
+        pathColor: {
+            bg: '#397aaf',
+            boxShadow: 'rgba(0,150,255,0.91)'
+        },
+        clickedColor: {
+            bg: '#2CDA9D',
+            boxShadow: 'rgba(0,150,255,0.91)'
+        },
+    },
+    {
+        boardLightColor:'#BEB7A4',
+        boardDarkColor:'#000',
+        darkPieceColor: '#423E37',
+        lightPieceColor: '#A4778B',
         pathColor: {
             bg: '#397aaf',
             boxShadow: 'rgba(0,150,255,0.91)'
