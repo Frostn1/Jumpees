@@ -158,50 +158,7 @@ const plain_board = [
     ]
 ]
 
-const colorPallete = [
-    {
-        boardLightColor:'antiquewhite',
-        boardDarkColor:'#282c34',
-        darkPieceColor: 'saddlebrown',
-        lightPieceColor: '#fff',
-        pathColor: {
-            bg: '#397aaf',
-            boxShadow: '#fff'
-        },
-        clickedColor: {
-            bg: '#2CDA9D',
-            boxShadow: '#fff'
-        },
-    },
-    {
-        boardLightColor:'#F6E8EA',
-        boardDarkColor:'#22181C',
-        darkPieceColor: '#312F2F',
-        lightPieceColor: '#6B818C',
-        pathColor: {
-            bg: '#397aaf',
-            boxShadow: 'rgba(0,150,255,0.91)'
-        },
-        clickedColor: {
-            bg: '#2CDA9D',
-            boxShadow: 'rgba(0,150,255,0.91)'
-        },
-    },
-    {
-        boardLightColor:'#BEB7A4',
-        boardDarkColor:'#000',
-        darkPieceColor: '#423E37',
-        lightPieceColor: '#A4778B',
-        pathColor: {
-            bg: '#397aaf',
-            boxShadow: 'rgba(0,150,255,0.91)'
-        },
-        clickedColor: {
-            bg: '#2CDA9D',
-            boxShadow: 'rgba(0,150,255,0.91)'
-        },
-    }
-]
+
 const Board = (props) => {
 
     const [selectedRowIndex, setSelectedRowIndex] = useState(-1);
@@ -210,7 +167,8 @@ const Board = (props) => {
     const [liveBoard, setLiveBoard] = useState(plain_board);
     const [currentPlayer, setCurrentPlayer] = useState(1);
     const [moveCounter, setMoveCounter] = useState(0);
-    const [selectedColorPallete, setSelectedColorPallete] = useState(0);
+    const [colorPallete] = useState(props.colorPallete)
+    const [selectedColorPallete] = useState(props.selectedColorPallete);
     const [gameOver, setGameOver] = useState(false);
     const [playerWon, setPlayerWon] = useState(null);
     const getJumpPaths = (rowIndex, columnIndex, pieceColor, oldValidMoves) => {
@@ -339,7 +297,7 @@ const Board = (props) => {
         let lightColorCheck = true;
         for (let i = 0;i < 3; i++)
             for(let j = 0; j < 3; j++) {
-                lightColorCheck = liveBoard[i][j].piece === 1 ? true : false;
+                lightColorCheck = liveBoard[i][j].piece === 1;
                 if(!lightColorCheck)
                     i = j = 3;
             }
@@ -350,7 +308,7 @@ const Board = (props) => {
         let darkColorCheck = true;
         for (let i = 5;i < BOARD_SIZE; i++)
             for(let j = 5; j < BOARD_SIZE; j++) {
-                darkColorCheck = liveBoard[i][j].piece === 0 ? true : false;
+                darkColorCheck = liveBoard[i][j].piece === 0;
                 if(!darkColorCheck)
                     i = j = BOARD_SIZE;
             }
@@ -389,38 +347,39 @@ const Board = (props) => {
         const root = document.documentElement;
         root.style.setProperty(
             '--dark-background-color',
-            colorPallete[selectedColorPallete].boardDarkColor
+            colorPallete[props.selectedColorPallete].boardDarkColor
         )
         root.style.setProperty(
             '--light-background-color',
-            colorPallete[selectedColorPallete].boardLightColor
+            colorPallete[props.selectedColorPallete].boardLightColor
         )
         root.style.setProperty(
             '--dark-piece-color',
-            colorPallete[selectedColorPallete].darkPieceColor
+            colorPallete[props.selectedColorPallete].darkPieceColor
         )
         root.style.setProperty(
             '--light-piece-color',
-            colorPallete[selectedColorPallete].lightPieceColor
+            colorPallete[props.selectedColorPallete].lightPieceColor
         )
         root.style.setProperty(
             '--path-bg-color',
-            colorPallete[selectedColorPallete].pathColor.bg
+            colorPallete[props.selectedColorPallete].pathColor.bg
         )
         root.style.setProperty(
             '--path-box-color',
-            colorPallete[selectedColorPallete].pathColor.boxShadow
+            colorPallete[props.selectedColorPallete].pathColor.boxShadow
         )
         root.style.setProperty(
             '--clicked-bg-color',
-            colorPallete[selectedColorPallete].clickedColor.bg
+            colorPallete[props.selectedColorPallete].clickedColor.bg
         )
         root.style.setProperty(
             '--clicked-box-color',
-            colorPallete[selectedColorPallete].clickedColor.boxShadow
+            colorPallete[props.selectedColorPallete].clickedColor.boxShadow
         )
     }
     useEffect(setUpBoard, [])
+    useEffect(setUpBoard, [props.selectedColorPallete])
 
     return (
         <div id={'board-pane'}>
@@ -454,6 +413,9 @@ const Board = (props) => {
     </div>)
 };
 Board.propTypes = {
-    showPaths: PropTypes.bool.isRequired
+    showPaths: PropTypes.bool.isRequired,
+    colorPallete: PropTypes.array.isRequired,
+    selectedColorPallete: PropTypes.number.isRequired,
+
 }
 export default Board
