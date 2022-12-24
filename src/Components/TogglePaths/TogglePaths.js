@@ -31,12 +31,12 @@ const TogglePaths = (props) => {
         if(state) {
             sliderToy.style.animationName = 'off-to-on';
             sliderToy.style.animationDuration = '1s';
-            sliderToy.style.left = 'calc(100% - 45px - 10px)';
+            sliderToy.style.left = 'calc(100% - 45px - 5px)';
             sliderToy.style.background = props.onColor;
         } else {
             sliderToy.style.animationName = 'on-to-off';
             sliderToy.style.animationDuration = '1s';
-            sliderToy.style.left = '10px';
+            sliderToy.style.left = '5px';
             sliderToy.style.background = props.offColor;
         }
 

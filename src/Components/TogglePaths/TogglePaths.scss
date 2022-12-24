@@ -22,7 +22,7 @@
       height: 45px;
       background: var(--toggle-off-color);
       border-radius: 50%;
-      left: 10px;
+      left: 5px;
 
       position: absolute;
       cursor: pointer;
@@ -35,22 +35,22 @@
 
 @keyframes off-to-on {
     from {
-      left: 10px;
+      left: 5px;
       background: var(--toggle-off-color);
     }
     to {
-      left: calc(100% - 45px - 10px);
+      left: calc(100% - 45px - 5px);
       background: var(--toggle-on-color);
     }
 }
 
 @keyframes on-to-off {
   from {
-    left: calc(100% - 45px - 10px);
+    left: calc(100% - 45px - 5px);
     background: var(--toggle-on-color);
   }
   to {
-    left: 10px;
+    left: 5px;
     background: var(--toggle-off-color);
   }
 }
