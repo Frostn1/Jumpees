@@ -1,8 +1,9 @@
-import Board from "../Board/Board";
+import JumpeesBoard from "../JumpeesBoard/JumpeesBoard";
 import './MainPage.scss';
 import TogglePaths from "../TogglePaths/TogglePaths";
 import {useState} from "react";
 import ColorPalleteSelector from "../ColorPalleteSelector/ColorPalleteSelector";
+import CheckersBoard from "../CheckersBoard/CheckersBoard";
 const colorPallete = [
     {
         boardLightColor:'antiquewhite',
@@ -57,12 +58,18 @@ const colorPallete = [
 
 const MainPage = (props) => {
     const [showPathsToggle, setShowPathsToggle] = useState(false)
+    const [toggleGame, setToggleGame] = useState(false)
     const [selectedColorPallete, setSelectedColorPallete] = useState(0)
     return (
         <div id='main-page'>
-            <Board showPaths={showPathsToggle} colorPallete={colorPallete} selectedColorPallete={selectedColorPallete}/>
+            { toggleGame ?
+                <CheckersBoard showPaths={showPathsToggle} colorPallete={colorPallete} selectedColorPallete={selectedColorPallete}/>
+                :
+                <JumpeesBoard showPaths={showPathsToggle} colorPallete={colorPallete} selectedColorPallete={selectedColorPallete}/>
+            }
             <div className={'toggle-switch-container'}>
-                <TogglePaths toggleState={setShowPathsToggle} isOn={showPathsToggle} onColor={colorPallete[selectedColorPallete].toggleOnColor} offColor={colorPallete[selectedColorPallete].toggleOffColor}/>
+                <TogglePaths _key={'slider-toy-'+Math.random()} toggleState={setShowPathsToggle} isOn={showPathsToggle} onColor={colorPallete[selectedColorPallete].toggleOnColor} offColor={colorPallete[selectedColorPallete].toggleOffColor}/>
+                <TogglePaths _key={'slider-toy-'+Math.random()} toggleState={setToggleGame} isOn={toggleGame} onColor={colorPallete[selectedColorPallete].toggleOnColor} offColor={colorPallete[selectedColorPallete].toggleOffColor}/>
             </div>
             <div className={'color-pallete-container'}>
                 <ColorPalleteSelector colorPalleteArray={colorPallete} selectedColorPallete={selectedColorPallete} handleSelectColorPallete={setSelectedColorPallete}/>

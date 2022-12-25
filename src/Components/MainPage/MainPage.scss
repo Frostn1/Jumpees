@@ -6,6 +6,8 @@
     width: 100px;
     height: 100px;
     position: absolute;
+    display: flex;
+    flex-direction: column;
     left: 20px;
     top: 20px;
   }

@@ -1,0 +1,69 @@
+#jumpees-board-pane{
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  .display-game-over{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    background-color: rgba(50,50,50,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 70px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 4px 4px 6px rgba(0,0,0,0.5);
+  }
+  .row{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    .square{
+      height: 80px;
+      width: 80px;
+      position: relative;
+      .piece{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        z-index: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 3px 3px 10px 1px rgba(56,56,56,0.91);
+        cursor: pointer;
+      }
+      .light-piece-color{
+        background: var(--light-piece-color);
+      }
+      .dark-piece-color{
+        background: var(--dark-piece-color);
+      }
+    }
+    .clicked-color{
+      background: var(--clicked-bg-color) !important;
+      box-shadow: 3px 3px 17px 1px var(--clicked-box-color) inset;
+    }
+    .path-color{
+      background: var(--path-bg-color) !important;
+      cursor: pointer;
+      box-shadow: 3px 3px 17px 1px var(--path-box-color) inset;
+    }
+    .black{
+      background: var(--dark-background-color);
+    }
+
+    .white{
+      background: var(--light-background-color);
+    }
+  }
+}

@@ -1,9 +1,9 @@
-import './Board.scss'
+import './JumpeesBoard.scss'
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
 const BOARD_SIZE = 8;
-const plain_board = [
+const jumpees_board = [
     [
         {
             clicked: false, path: false, piece: 0
@@ -159,16 +159,15 @@ const plain_board = [
 ]
 
 
-const Board = (props) => {
+const JumpeesBoard = (props) => {
 
     const [selectedRowIndex, setSelectedRowIndex] = useState(-1);
     const [selectedColumnIndex, setSelectedColumnIndex] = useState(-1);
     const [selectedValidMoves, setSelectedValidMoves] = useState(new Map());
-    const [liveBoard, setLiveBoard] = useState(plain_board);
+    const [liveBoard, setLiveBoard] = useState(jumpees_board);
     const [currentPlayer, setCurrentPlayer] = useState(1);
     const [moveCounter, setMoveCounter] = useState(0);
     const [colorPallete] = useState(props.colorPallete)
-    const [selectedColorPallete] = useState(props.selectedColorPallete);
     const [gameOver, setGameOver] = useState(false);
     const [playerWon, setPlayerWon] = useState(null);
     const getJumpPaths = (rowIndex, columnIndex, pieceColor, oldValidMoves) => {
@@ -264,33 +263,33 @@ const Board = (props) => {
         return validMoves
     }
     const onClick = (rowIndex, columnIndex) => {
-        if(plain_board[rowIndex][columnIndex].piece !== currentPlayer) return;
+        if(jumpees_board[rowIndex][columnIndex].piece !== currentPlayer) return;
         if(selectedColumnIndex !== -1 || selectedRowIndex !== -1) {
-            plain_board[selectedRowIndex][selectedColumnIndex].clicked = false;
+            jumpees_board[selectedRowIndex][selectedColumnIndex].clicked = false;
         }
         if(rowIndex === selectedRowIndex && columnIndex === selectedColumnIndex) {
-            plain_board[rowIndex][columnIndex].clicked = false;
+            jumpees_board[rowIndex][columnIndex].clicked = false;
             clearSelection();
             return;
         }
 
         setSelectedRowIndex(rowIndex);
         setSelectedColumnIndex(columnIndex);
-        plain_board[rowIndex][columnIndex].clicked = true;
+        jumpees_board[rowIndex][columnIndex].clicked = true;
         selectedValidMoves.forEach((value, _oldValidMove) => {
             const parsedValidMove = JSON.parse(_oldValidMove)
-            plain_board[parsedValidMove[0]][parsedValidMove[1]].path = false;
+            jumpees_board[parsedValidMove[0]][parsedValidMove[1]].path = false;
         })
 
-        const validMoves = getSlidePaths(rowIndex, columnIndex, plain_board[rowIndex][columnIndex].piece)
+        const validMoves = getSlidePaths(rowIndex, columnIndex, jumpees_board[rowIndex][columnIndex].piece)
         validMoves.forEach((value, _validMove) => {
             const parsedValidMove = JSON.parse(_validMove)
 
-            plain_board[parsedValidMove[0]][parsedValidMove[1]].path = true;
+            jumpees_board[parsedValidMove[0]][parsedValidMove[1]].path = true;
         })
         setSelectedValidMoves(validMoves);
 
-        setLiveBoard(plain_board)
+        setLiveBoard(jumpees_board)
     }
 
     const checkWin = () => {
@@ -320,10 +319,10 @@ const Board = (props) => {
 
     const movePiece = (destRowIndex, destColumnIndex, srcRowIndex, srcColumnIndex, piece) => {
         if(liveBoard[destRowIndex][destColumnIndex].path) {
-            plain_board[srcRowIndex][srcColumnIndex].piece = null;
-            plain_board[destRowIndex][destColumnIndex].piece = piece;
+            jumpees_board[srcRowIndex][srcColumnIndex].piece = null;
+            jumpees_board[destRowIndex][destColumnIndex].piece = piece;
         }
-        setLiveBoard(plain_board)
+        setLiveBoard(jumpees_board)
         setCurrentPlayer(currentPlayer ? 0 : 1)
         setMoveCounter(moveCounter + 1)
         if(moveCounter > 15)
@@ -334,13 +333,13 @@ const Board = (props) => {
     const clearSelection = () => {
         selectedValidMoves.forEach((value, _oldValidMove) => {
             const parsedValidMove = JSON.parse(_oldValidMove)
-            plain_board[parsedValidMove[0]][parsedValidMove[1]].path = false;
+            jumpees_board[parsedValidMove[0]][parsedValidMove[1]].path = false;
         })
-        plain_board[selectedRowIndex][selectedColumnIndex].clicked = false;
+        jumpees_board[selectedRowIndex][selectedColumnIndex].clicked = false;
         setSelectedValidMoves(new Map());
         setSelectedRowIndex(-1);
         setSelectedColumnIndex(-1);
-        setLiveBoard(plain_board)
+        setLiveBoard(jumpees_board)
     }
 
     const setUpBoard = () => {
@@ -382,7 +381,7 @@ const Board = (props) => {
     useEffect(setUpBoard, [props.selectedColorPallete])
 
     return (
-        <div id={'board-pane'}>
+        <div id={'jumpees-board-pane'}>
         {liveBoard.map((row, rowIndex) => {
             return (
                 <div className={'row'}>
@@ -409,13 +408,11 @@ const Board = (props) => {
             </div> :
             null
         }
-
     </div>)
 };
-Board.propTypes = {
+JumpeesBoard.propTypes = {
     showPaths: PropTypes.bool.isRequired,
     colorPallete: PropTypes.array.isRequired,
     selectedColorPallete: PropTypes.number.isRequired,
-
 }
-export default Board
+export default JumpeesBoard

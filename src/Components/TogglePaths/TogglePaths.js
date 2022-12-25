@@ -26,7 +26,7 @@ const TogglePaths = (props) => {
     const toggleState = (state) => {
         setIsOn(state)
         props.toggleState(state)
-        const sliderToy = document.getElementById('slider-toy');
+        const sliderToy = document.getElementById(props._key);
 
         if(state) {
             sliderToy.style.animationName = 'off-to-on';
@@ -44,7 +44,7 @@ const TogglePaths = (props) => {
     return (
         <div id='toggle-paths'>
             <div className={'slider-path'}>
-                <div className={'slider'} id={'slider-toy'} onClick={() => toggleState(!props.isOn)}/>
+                <div className={'slider'} id={props._key} onClick={() => toggleState(!props.isOn)}/>
             </div>
         </div>
     )
@@ -54,7 +54,8 @@ TogglePaths.propTypes = {
     isOn: PropTypes.bool.isRequired,
     toggleState: PropTypes.func.isRequired,
     onColor: PropTypes.string.isRequired,
-    offColor: PropTypes.string.isRequired
+    offColor: PropTypes.string.isRequired,
+    _key: PropTypes.string.isRequired
 };
 
 export default TogglePaths

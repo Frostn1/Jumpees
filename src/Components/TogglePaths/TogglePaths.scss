@@ -1,6 +1,7 @@
 #toggle-paths {
+
   width: fit-content;
-  height: fit-content;
+  height: 50px;
   .slider-path{
     background-color: #dadada;
     width: 120px;
@@ -28,6 +29,9 @@
 
 }
 
+#toggle-paths:not(:first-child){
+  margin-top: 20px;
+}
 @keyframes off-to-on {
     from {
       left: 5px;
